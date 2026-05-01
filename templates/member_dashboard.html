@@ -1,0 +1,202 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="main">
+
+  <!-- HEADER -->
+  <div class="mb-4">
+    <h2 class="fw-bold">👋 Hello, {{ current_user.name }}</h2>
+    <p class="text-muted">Track your productivity today</p>
+  </div>
+
+  <!-- STATS -->
+  <div class="row g-4 mb-4">
+
+    <div class="col-md-3">
+      <div class="stat-card">
+        <p>Total Tasks</p>
+        <h2>{{ total }}</h2>
+      </div>
+    </div>
+
+    <div class="col-md-3">
+      <div class="stat-card success">
+        <p>Completed</p>
+        <h2>{{ completed }}</h2>
+      </div>
+    </div>
+
+    <div class="col-md-3">
+      <div class="stat-card warning">
+        <p>Pending</p>
+        <h2>{{ pending }}</h2>
+      </div>
+    </div>
+
+    <div class="col-md-3">
+      <div class="stat-card danger">
+        <p>Overdue</p>
+        <h2>{{ overdue }}</h2>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- PROGRESS -->
+  {% set percent = ((completed / total) * 100) if total > 0 else 0 %}
+  {% set percent_int = percent|round(0, 'floor') %}
+
+  <div class="card p-3 mb-4">
+    <h6 class="mb-2">Progress</h6>
+
+    <div class="progress custom-progress">
+      <div class="progress-bar custom-bar"
+           style="width: {{ percent_int }}%">
+        {{ percent_int }}%
+      </div>
+    </div>
+  </div>
+
+  <!-- TEAM + PROJECT -->
+  <div class="row g-4">
+
+    <!-- TEAM -->
+    <div class="col-md-4">
+      <div class="card p-3">
+        <h5>👥 Team</h5>
+
+        {% if users %}
+          {% for user in users %}
+            <div class="member">
+              👤 {{ user.name }}
+            </div>
+          {% endfor %}
+        {% else %}
+          <p class="text-muted">No team</p>
+        {% endif %}
+      </div>
+    </div>
+
+    <!-- PROJECT -->
+    <div class="col-md-8">
+      <div class="card p-3">
+        <h5>📁 Projects</h5>
+
+        {% if projects %}
+        <table class="table align-middle mt-3">
+
+          <tbody>
+          {% for project in projects %}
+          <tr>
+            <td class="fw-semibold">{{ project.name }}</td>
+            <td>
+              {% if project.status == "Completed" %}
+                <span class="badge bg-success">Completed</span>
+              {% elif project.status == "In Progress" %}
+                <span class="badge bg-warning text-dark">In Progress</span>
+              {% else %}
+                <span class="badge bg-secondary">Planning</span>
+              {% endif %}
+            </td>
+          </tr>
+          {% endfor %}
+          </tbody>
+
+        </table>
+        {% endif %}
+
+      </div>
+    </div>
+
+  </div>
+
+  <!-- TASKS -->
+  <div class="card mt-4 p-3">
+    <h5>📋 My Tasks</h5>
+
+    {% if tasks %}
+    <table class="table align-middle mt-3">
+
+      <tbody>
+      {% for task in tasks %}
+      <tr class="{% if task.is_overdue %}table-danger{% endif %}">
+
+        <td class="fw-medium">{{ task.title }}</td>
+
+        <td>
+          {% if task.status == "Completed" %}
+            <span class="badge bg-success">Done</span>
+          {% elif task.is_overdue %}
+            <span class="badge bg-danger">Overdue</span>
+          {% else %}
+            <span class="badge bg-warning text-dark">Pending</span>
+          {% endif %}
+        </td>
+
+        <td>
+          {{ task.due_date.strftime('%d %b') if task.due_date else '-' }}
+        </td>
+
+        <td>
+          {% if task.status != "Completed" %}
+            <a href="/update_task/{{ task.id }}" class="btn btn-sm btn-primary">
+              Mark Done
+            </a>
+          {% endif %}
+        </td>
+
+      </tr>
+      {% endfor %}
+      </tbody>
+
+    </table>
+
+    {% else %}
+      <p class="text-muted text-center mt-3">No tasks assigned</p>
+    {% endif %}
+
+  </div>
+
+</div>
+
+<style>
+
+/* STAT CARD */
+.stat-card {
+  background: #111827;
+  color: white;
+  padding: 20px;
+  border-radius: 12px;
+  text-align: center;
+}
+
+.stat-card.success { background: #16a34a; }
+.stat-card.warning { background: #f59e0b; }
+.stat-card.danger { background: #dc2626; }
+
+/* MEMBER */
+.member {
+  padding: 8px;
+  border-bottom: 1px solid #eee;
+}
+
+/* PROGRESS */
+.custom-progress {
+  height: 10px;
+  border-radius: 10px;
+}
+
+.custom-bar {
+  background: linear-gradient(90deg,#6366f1,#4f46e5);
+  font-size: 10px;
+}
+
+/* TABLE */
+.table {
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+</style>
+
+{% endblock %}
