@@ -1,0 +1,154 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="auth-bg d-flex justify-content-center align-items-center">
+
+  <div class="auth-card">
+
+    <!-- HEADER -->
+    <h2 class="text-center text-white mb-1 fw-bold">Create Account</h2>
+    <p class="text-center subtitle mb-4">Join Taskify 🚀</p>
+
+    <!-- FORM -->
+    <form method="POST">
+
+      <!-- EMPLOYEE ID -->
+      <input type="text" name="employee_id"
+             placeholder="Employee ID"
+             class="form-control input-modern"
+             required>
+
+      <!-- NAME -->
+      <input type="text" name="name"
+             placeholder="Full Name"
+             class="form-control input-modern"
+             required>
+
+      <!-- EMAIL -->
+      <input type="email" name="email"
+             placeholder="Email Address"
+             class="form-control input-modern"
+             required>
+
+      <!-- PASSWORD -->
+      <div class="password-box">
+        <input type="password" name="password" id="password"
+               placeholder="Password"
+               class="form-control input-modern"
+               required>
+        <span onclick="togglePassword()">👁</span>
+      </div>
+
+      <!-- PASSWORD RULE -->
+      <small class="text-muted d-block mb-3">
+        8+ chars • A-Z • number • special
+      </small>
+
+      <!-- SUBMIT -->
+      <button class="btn btn-primary w-100 btn-glow">
+        Create Account
+      </button>
+
+    </form>
+
+    <!-- LOGIN LINK -->
+    <p class="text-center mt-4 small text-light">
+      Already have an account?
+      <a href="/login" class="link">Login</a>
+    </p>
+
+  </div>
+
+</div>
+
+<style>
+
+/* BACKGROUND */
+.auth-bg {
+  height: 100vh;
+  background: radial-gradient(circle at top, #111827, #020617);
+}
+
+/* CARD */
+.auth-card {
+  width: 350px;
+  padding: 30px;
+  border-radius: 16px;
+  background: rgba(15, 23, 42, 0.85);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 10px 40px rgba(0,0,0,0.6);
+}
+
+/* SUBTITLE */
+.subtitle {
+  color: #94a3b8;
+  font-size: 14px;
+}
+
+/* INPUT */
+.input-modern {
+  background: transparent;
+  border: 1px solid #334155;
+  color: white;
+  padding: 10px;
+  margin-bottom: 12px;
+  border-radius: 8px;
+}
+
+.input-modern::placeholder {
+  color: #94a3b8;
+}
+
+.input-modern:focus {
+  border-color: #6366f1;
+  box-shadow: 0 0 0 2px rgba(99,102,241,0.3);
+}
+
+/* PASSWORD */
+.password-box {
+  position: relative;
+}
+
+.password-box span {
+  position: absolute;
+  right: 10px;
+  top: 9px;
+  cursor: pointer;
+  color: #94a3b8;
+}
+
+/* BUTTON */
+.btn-glow {
+  background: linear-gradient(135deg,#6366f1,#4f46e5);
+  border: none;
+  padding: 10px;
+  font-weight: 600;
+  border-radius: 8px;
+  transition: 0.3s;
+}
+
+.btn-glow:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 20px rgba(99,102,241,0.5);
+}
+
+/* LINK */
+.link {
+  color: #6366f1;
+  text-decoration: none;
+}
+
+.link:hover {
+  text-decoration: underline;
+}
+
+</style>
+
+<script>
+function togglePassword() {
+  const p = document.getElementById("password");
+  p.type = p.type === "password" ? "text" : "password";
+}
+</script>
+
+{% endblock %}
