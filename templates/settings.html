@@ -1,0 +1,170 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="main">
+
+  <!-- HEADER -->
+  <div class="mb-4">
+    <h3 class="fw-bold">⚙ Settings</h3>
+    <p class="text-muted">Manage your account preferences</p>
+  </div>
+
+  <!-- GRID -->
+  <div class="row g-4">
+
+    <!-- LEFT SIDE -->
+    <div class="col-md-4">
+
+      <!-- PROFILE CARD -->
+      <div class="card p-4 text-center profile-card">
+
+        <div class="avatar-lg mb-2">
+          {{ current_user.name[0] if current_user.name else "U" }}
+        </div>
+
+        <h6 class="fw-semibold mb-0">{{ current_user.name }}</h6>
+        <small class="text-muted">{{ current_user.email }}</small>
+
+        <div class="mt-2">
+          {% if current_user.role == "admin" %}
+            <span class="badge bg-danger">Admin</span>
+          {% else %}
+            <span class="badge bg-primary">Member</span>
+          {% endif %}
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- RIGHT SIDE -->
+    <div class="col-md-8">
+
+      <!-- PROFILE FORM -->
+      <div class="card p-4 mb-4 settings-card">
+
+        <h5 class="mb-3">👤 Profile Info</h5>
+
+        <form method="POST" action="/update_profile">
+
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <label>Full Name</label>
+              <input type="text" name="name"
+                     value="{{ current_user.name }}"
+                     class="form-control input-modern" required>
+            </div>
+
+            <div class="col-md-6 mb-3">
+              <label>Email</label>
+              <input type="email" name="email"
+                     value="{{ current_user.email }}"
+                     class="form-control input-modern" required>
+            </div>
+          </div>
+
+          <button class="btn btn-primary btn-glow">
+            Save Changes
+          </button>
+
+        </form>
+
+      </div>
+
+      <!-- PASSWORD -->
+      <div class="card p-4 settings-card">
+
+        <h5 class="mb-3">🔒 Security</h5>
+
+        <form method="POST" action="/change_password">
+
+          <div class="mb-3">
+            <label>Current Password</label>
+            <input type="password" name="current_password"
+                   class="form-control input-modern" required>
+          </div>
+
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <label>New Password</label>
+              <input type="password" name="new_password"
+                     class="form-control input-modern" required>
+            </div>
+
+            <div class="col-md-6 mb-3">
+              <label>Confirm Password</label>
+              <input type="password" name="confirm_password"
+                     class="form-control input-modern" required>
+            </div>
+          </div>
+
+          <small class="text-muted">
+            Use strong password (uppercase, number, special character)
+          </small>
+
+          <br>
+
+          <button class="btn btn-primary btn-glow mt-2">
+            Update Password
+          </button>
+
+        </form>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+<style>
+
+/* PROFILE CARD */
+.profile-card {
+  border-radius: 16px;
+  box-shadow: 0 6px 25px rgba(0,0,0,0.05);
+}
+
+/* AVATAR LARGE */
+.avatar-lg {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  background: linear-gradient(135deg,#6366f1,#4f46e5);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  font-weight: bold;
+  margin: auto;
+}
+
+/* SETTINGS CARD */
+.settings-card {
+  border-radius: 16px;
+  box-shadow: 0 6px 25px rgba(0,0,0,0.05);
+}
+
+/* INPUT */
+.input-modern {
+  border-radius: 8px;
+  padding: 10px;
+}
+
+/* BUTTON */
+.btn-glow {
+  background: linear-gradient(135deg,#6366f1,#4f46e5);
+  border: none;
+  transition: 0.3s;
+}
+
+.btn-glow:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(99,102,241,0.4);
+}
+
+</style>
+
+{% endblock %}
