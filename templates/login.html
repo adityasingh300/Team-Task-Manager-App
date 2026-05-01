@@ -1,0 +1,136 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="main-container">
+
+  <!-- LEFT SIDE -->
+  <div class="left-panel">
+    <h1>Taskify</h1>
+    <p>Manage your work.<br>Stay productive.</p>
+  </div>
+
+  <!-- RIGHT SIDE -->
+  <div class="right-panel">
+
+    <div class="login-box">
+
+      <h3 class="mb-3">Login</h3>
+
+      {% with messages = get_flashed_messages() %}
+        {% if messages %}
+          <div class="alert alert-danger text-center py-2 small">
+            {{ messages[0] }}
+          </div>
+        {% endif %}
+      {% endwith %}
+
+      <form method="POST">
+
+        <input type="email" name="email"
+               class="input-field"
+               placeholder="Email" required>
+
+        <input type="password" name="password"
+               class="input-field"
+               placeholder="Password" required>
+
+        <button class="login-btn">Sign In</button>
+
+      </form>
+
+      <p class="small mt-3">
+        New user?
+        <a href="/signup">Create account</a>
+      </p>
+
+    </div>
+
+  </div>
+
+</div>
+
+<style>
+
+/* FULL LAYOUT */
+.main-container {
+  display: flex;
+  height: 100vh;
+}
+
+/* LEFT PANEL (Branding 🔥) */
+.left-panel {
+  flex: 1;
+  background: linear-gradient(160deg,#0f2027,#203a43,#2c5364);
+  color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 60px;
+}
+
+.left-panel h1 {
+  font-size: 48px;
+  font-weight: bold;
+}
+
+.left-panel p {
+  margin-top: 10px;
+  color: #cbd5e1;
+}
+
+/* RIGHT PANEL */
+.right-panel {
+  flex: 1;
+  background: #0a0a0a;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* LOGIN BOX */
+.login-box {
+  width: 300px;
+}
+
+/* INPUT */
+.input-field {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 12px;
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid #555;
+  color: white;
+  outline: none;
+}
+
+/* INPUT FOCUS */
+.input-field:focus {
+  border-bottom: 1px solid #00f5a0;
+}
+
+/* BUTTON (Neon Style ⚡) */
+.login-btn {
+  width: 100%;
+  padding: 10px;
+  background: #00f5a0;
+  border: none;
+  color: black;
+  font-weight: bold;
+  margin-top: 10px;
+  transition: 0.3s;
+}
+
+.login-btn:hover {
+  box-shadow: 0 0 15px #00f5a0;
+}
+
+/* LINKS */
+a {
+  color: #00f5a0;
+  text-decoration: none;
+}
+
+</style>
+
+{% endblock %}
